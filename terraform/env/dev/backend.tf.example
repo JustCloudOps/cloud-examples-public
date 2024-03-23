@@ -1,0 +1,9 @@
+#dummy values
+terraform {
+  backend "s3" {
+    bucket = "SOME-BUCKET-tf-state"
+    key    = "ENV/SOME-KEY.tfstate"
+    region = "SOME-REGION"
+    dynamodb_table = "SOME-TABLE-tfstate-lock-ENV"
+  }
+}
