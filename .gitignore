@@ -38,3 +38,6 @@ backend.tf
 
 #lockfile
 .terraform.lock.hcl
+
+#for compressed helm charts during bootstrap 
+*.tgz

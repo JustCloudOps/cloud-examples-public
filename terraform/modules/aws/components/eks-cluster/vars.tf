@@ -14,6 +14,12 @@ variable "endpoint_public_access" {
   default     = false
 }
 
+variable "cluster_endpoint_public_access_cidrs" {
+  description = "List of CIDR blocks which can access the Amazon EKS public API server endpoint"
+  type        = list(string)
+  default     = []
+}
+
 variable "vpc_id" {
   description = "the vpc_id where cluster will be deployed"
   type        = string
@@ -116,3 +122,5 @@ variable "deploy_karpenter_infra" {
   type        = bool
   default     = false
 }
+
+#Argo CD
