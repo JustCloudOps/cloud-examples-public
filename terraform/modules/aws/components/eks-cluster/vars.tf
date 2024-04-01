@@ -105,8 +105,8 @@ variable "nodegroup_subnets" {
 
 variable "managed_nodegroups_config" {
   description = "the configuration of the node group(s)"
-  type = any
-  default = {}
+  type        = any
+  default     = {}
 }
 
 variable "nodegroup_maxunavailable" {
@@ -122,5 +122,3 @@ variable "deploy_karpenter_infra" {
   type        = bool
   default     = false
 }
-
-#Argo CD

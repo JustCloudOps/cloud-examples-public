@@ -46,5 +46,5 @@ module "eks-cluster-1" {
     }
   }
 
-  deploy_karpenter_infra = true
+  deploy_karpenter_infra = false
 }

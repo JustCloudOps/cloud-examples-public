@@ -4,10 +4,23 @@
 # Platform base apps
 #####
 
+
 module "external_secrets" {
-  source = "../../modules/aws/apps/external-secrets"
+  source = "../../modules/k8s/external-secrets"
   providers = {
     helm = helm.eks-cluster-1
   }
   depends_on = [module.eks-cluster-1]
+}
+
+
+module "alb_controller" {
+  source = "../../modules/k8s/alb-controller"
+  providers = {
+    helm = helm.eks-cluster-1
+  }
+  account_id    = data.aws_caller_identity.current.account_id
+  cluster_name  = module.eks-cluster-1.cluster.cluster_name
+  oidc_provider = module.eks-cluster-1.cluster.cluster_oidc_issuer_url
+  depends_on    = [module.eks-cluster-1]
 }
