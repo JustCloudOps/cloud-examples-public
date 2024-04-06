@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: alb-controller-test
+  name: alb-controller-test
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: alb-controller-test
+  template:
+    metadata:
+      labels:
+        app: alb-controller-test
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+         - name: http
+           containerPort: 80  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: alb-controller-test
+  name: alb-controller-test
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: alb-controller-test
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alb-controller-test
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alb-controller-test
+              port:
+                number: 80

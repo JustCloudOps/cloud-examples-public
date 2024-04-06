@@ -5,11 +5,11 @@ resource "helm_release" "alb-controller" {
   namespace  = "kube-system"
   version    = "1.7.2"
   set {
-    name = "clusterName"
+    name  = "clusterName"
     value = var.cluster_name
   }
   set {
-    name = "serviceAccount.name"
+    name  = "serviceAccount.name"
     value = var.alb_controller_sa_name
   }
   set {

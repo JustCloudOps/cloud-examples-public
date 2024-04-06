@@ -33,3 +33,19 @@ variable "vpc_one_nat_gateway_per_az" {
   type        = bool
   default     = false
 }
+
+variable "public_subnet_tags" {
+  description = "Additional tags for the public subnets"
+  type        = map(string)
+  default = {
+    "kubernetes.io/role/elb" = "1"
+  }
+}
+
+variable "private_subnet_tags" {
+  description = "Additional tags for the private subnets"
+  type        = map(string)
+  default = {
+    "kubernetes.io/role/internal-elb" = "1"
+  }
+}

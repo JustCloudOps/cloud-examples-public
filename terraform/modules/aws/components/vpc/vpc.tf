@@ -11,7 +11,9 @@ module "vpc" {
   cidr                   = var.vpc_cidr
   azs                    = var.vpc_azs
   private_subnets        = var.vpc_private_subnets
+  private_subnet_tags    = var.private_subnet_tags
   public_subnets         = var.vpc_public_subnets
+  public_subnet_tags     = var.public_subnet_tags
   enable_nat_gateway     = var.vpc_single_nat_gateway # only want single if any at all
   single_nat_gateway     = var.vpc_single_nat_gateway
   one_nat_gateway_per_az = var.vpc_one_nat_gateway_per_az
