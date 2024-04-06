@@ -10,9 +10,8 @@ module "external_secrets" {
   providers = {
     helm = helm.eks-cluster-1
   }
-  depends_on = [module.eks-cluster-1]
+  depends_on = [module.eks-cluster-1, module.alb_controller]
 }
-
 
 module "alb_controller" {
   source = "../../modules/k8s/alb-controller"
@@ -23,4 +22,12 @@ module "alb_controller" {
   cluster_name  = module.eks-cluster-1.cluster.cluster_name
   oidc_provider = module.eks-cluster-1.cluster.cluster_oidc_issuer_url
   depends_on    = [module.eks-cluster-1]
+}
+
+module "argo_cd" {
+  source = "../../modules/k8s/argo-cd"
+  providers = {
+    helm = helm.eks-cluster-1
+  }
+  depends_on = [module.eks-cluster-1, module.external_secrets, module.alb_controller]
 }
