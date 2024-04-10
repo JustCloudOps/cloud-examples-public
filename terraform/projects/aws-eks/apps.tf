@@ -4,7 +4,15 @@
 # Platform base apps
 #####
 
+module "metrics-server" {
+  source = "../../modules/k8s/metrics-server"
+  providers = {
+    helm = helm.eks-cluster-1
+  }
+  depends_on = [module.eks-cluster-1]
+}
 
+/*
 module "external_secrets" {
   source = "../../modules/k8s/external-secrets"
   providers = {
@@ -31,3 +39,4 @@ module "argo_cd" {
   }
   depends_on = [module.eks-cluster-1, module.external_secrets, module.alb_controller]
 }
+*/
