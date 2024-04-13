@@ -2,7 +2,7 @@ configs:
   params:
     server.insecure: true
   repositories:
-    cloudy-examples-public-repo:
-      url: https://github.com/j-worr/cloudy-examples-public
+    cloud-examples-public-repo:
+      url: https://github.com/j-worr/cloud-examples-public
       type: git
       project: default
