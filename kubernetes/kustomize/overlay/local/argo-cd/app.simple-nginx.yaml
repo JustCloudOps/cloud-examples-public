@@ -5,4 +5,4 @@ metadata:
   namespace: argocd
 spec:
   source:
-    path: kubernetes/kustomize/overlay/dev/simple-nginx
+    path: kubernetes/kustomize/overlay/local/simple-nginx
