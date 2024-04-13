@@ -4,6 +4,7 @@
 # Platform base apps
 #####
 
+
 module "metrics-server" {
   source = "../../modules/k8s/metrics-server"
   providers = {
@@ -12,7 +13,7 @@ module "metrics-server" {
   depends_on = [module.eks-cluster-1]
 }
 
-/*
+
 module "external_secrets" {
   source = "../../modules/k8s/external-secrets"
   providers = {
@@ -32,6 +33,7 @@ module "alb_controller" {
   depends_on    = [module.eks-cluster-1]
 }
 
+/* Uncomment to deploy ArgoCD with terrafrom 
 module "argo_cd" {
   source = "../../modules/k8s/argo-cd"
   providers = {

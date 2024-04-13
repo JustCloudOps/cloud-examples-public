@@ -1,0 +1,10 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: simple-nginx
+  name: simple-nginx
+  namespace: simple-nginx
+spec:
+  replicas: 3

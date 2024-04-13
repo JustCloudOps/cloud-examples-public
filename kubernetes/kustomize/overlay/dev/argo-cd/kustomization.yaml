@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../base/argo-cd
+
+helmCharts:
+  - name: argo-cd
+    repo: https://argoproj.github.io/argo-helm
+    version: 6.7.9
+    namespace: argocd
+    valuesFile: ../../../base/argo-cd/base-values.yaml
+    additionalValuesFiles:
+      - dev-values.yaml
+    valuesMerge: override
+
+
+#kustomize build . --enable-helm --load-restrictor LoadRestrictionsNone

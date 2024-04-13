@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+meatadata:
+  name: APP_NAME
+  namespace: argocd
+spec:
+  destination:
+    namespace: APP_NAMESPACE
+    server: https://kubernetes.default.svc
+  project:
+    default
+  syncPolicy:
+    automated: {}
+  source:
+    path: APP_PATH
+    repoURL: https://github.com/j-worr/cloudy-examples-public
+    targetRevision: main
