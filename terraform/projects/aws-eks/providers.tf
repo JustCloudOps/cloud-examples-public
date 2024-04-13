@@ -13,7 +13,7 @@ provider "aws" {
   default_tags {
     tags = {
       terraform = "true"
-      repo      = "github.com/j-worr/examples-public"
+      repo      = "github.com/j-worr/cloud-examples-public"
       env       = "dev"
     }
   }

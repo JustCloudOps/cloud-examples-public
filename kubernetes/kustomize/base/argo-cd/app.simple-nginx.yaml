@@ -13,5 +13,5 @@ spec:
     automated: {}
   source:
     path: APP_PATH
-    repoURL: https://github.com/j-worr/cloudy-examples-public
+    repoURL: https://github.com/j-worr/cloud-examples-public
     targetRevision: main
