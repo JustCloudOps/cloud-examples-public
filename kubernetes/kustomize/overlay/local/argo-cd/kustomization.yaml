@@ -7,14 +7,16 @@ resources:
 patches:
   - path: app.simple-nginx.yaml
 
+helmGlobals:
+  chartHome: ../../../../vendor-helm
+
 helmCharts:
   - name: argo-cd
-    repo: https://argoproj.github.io/argo-helm
     version: 6.7.9
     namespace: argocd
     valuesFile: ../../../base/argo-cd/base-values.yaml
     additionalValuesFiles:
-      - dev-values.yaml
+      - local-values.yaml
     valuesMerge: override
 
 
