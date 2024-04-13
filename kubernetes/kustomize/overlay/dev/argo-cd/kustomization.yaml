@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
   - ../../../base/argo-cd
 
+patches:
+  - path: app.simple-nginx.yaml
+
 helmCharts:
   - name: argo-cd
     repo: https://argoproj.github.io/argo-helm

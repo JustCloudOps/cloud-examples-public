@@ -7,4 +7,4 @@ metadata:
   name: simple-nginx
   namespace: simple-nginx
 spec:
-  replicas: 3
+  replicas: 2
