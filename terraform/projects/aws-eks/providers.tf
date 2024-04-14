@@ -14,7 +14,6 @@ provider "aws" {
     tags = {
       terraform = "true"
       repo      = "github.com/j-worr/cloud-examples-public"
-      env       = "dev"
     }
   }
 }
@@ -29,5 +28,16 @@ provider "helm" {
       command     = "aws"
     }
   }
+  alias = "eks-cluster-1"
+}
+
+provider "kubernetes" {
+    host                   = module.eks-cluster-1.cluster.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks-cluster-1.cluster.cluster_certificate_authority_data)
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      args        = ["eks", "get-token", "--cluster-name", module.eks-cluster-1.cluster.cluster_name]
+      command     = "aws"
+    }
   alias = "eks-cluster-1"
 }

@@ -19,9 +19,11 @@ module "external_secrets" {
   providers = {
     helm = helm.eks-cluster-1
   }
-  depends_on = [module.eks-cluster-1, module.alb_controller]
+  #depends_on = [module.eks-cluster-1, module.alb_controller]
+  depends_on = [module.eks-cluster-1]
 }
 
+/*
 module "alb_controller" {
   source = "../../modules/k8s/alb-controller"
   providers = {
@@ -32,6 +34,7 @@ module "alb_controller" {
   oidc_provider = module.eks-cluster-1.cluster.cluster_oidc_issuer_url
   depends_on    = [module.eks-cluster-1]
 }
+*/
 
 /* Uncomment to deploy ArgoCD with terrafrom 
 module "argo_cd" {
@@ -42,3 +45,17 @@ module "argo_cd" {
   depends_on = [module.eks-cluster-1, module.external_secrets, module.alb_controller]
 }
 */
+
+
+#####
+# test apps
+#####
+
+module "test-external-secrets" {
+  source = "../../modules/aws/apps/test-external-secrets"
+  cluster_name = module.eks-cluster-1.cluster.cluster_name
+  providers = {
+    kubernetes = kubernetes.eks-cluster-1
+  }
+  depends_on = [module.eks-cluster-1, module.external_secrets]
+}

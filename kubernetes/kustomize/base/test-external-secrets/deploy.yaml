@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-external-secrets
+  name: test-external-secrets
+  namespace: test-external-secrets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-external-secrets
+  template:
+    metadata:
+      labels:
+        app: test-external-secrets
+    spec:
+      containers:
+      - image: nginx
+        name: test-external-secrets
+        ports:
+         - name: http
+           containerPort: 80
+        envFrom:
+          - secretRef:
+              name: k8s-secret-name
+          - secretRef:
+              name: k8s-secret2-name
