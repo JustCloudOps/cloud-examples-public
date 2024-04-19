@@ -16,7 +16,6 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
-          vuln-type: 'vuln,secret,misconfig,license'
           ignore-unfixed: true
           format: 'sarif'
           output: 'trivy-results.sarif'
