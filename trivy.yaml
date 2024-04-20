@@ -1,4 +1,5 @@
 ignorefile: .trivyignore
+debug: true
 severity:
   - HIGH
   - CRITICAL
