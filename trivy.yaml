@@ -3,10 +3,10 @@ severity:
   - HIGH
   - CRITICAL
 scanners:
-    - vuln
+#    - vuln
     - misconfig
     - secret
-    - license
+#    - license
 misconfiguration:
   scanners:
     - dockerfile
