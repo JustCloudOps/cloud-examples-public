@@ -12,11 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Trivy vulnerability scanner in repo mode
+      - name: Run Trivy Scan
         uses: aquasecurity/trivy-action@0.18.0
         with:
           scan-type: 'fs'
-          scanners: 'misconfig'
+          scanners: 'vuln,secret,misconfig'
           scan-ref: '.'
           hide-progress: false
           format: 'sarif'
