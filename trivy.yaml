@@ -1,0 +1,12 @@
+severity:
+  - HIGH
+  - CRITICAL
+scanners:
+    - vuln
+    - misconfig
+    - secret
+    - license
+misconfiguration:
+  scanners:
+    - dockerfile
+    - terraform
