@@ -1,13 +1,12 @@
 ignorefile: .trivyignore
-debug: true
+format: 'sarif'
 severity:
   - HIGH
   - CRITICAL
 scanners:
-#    - vuln
+    - vuln
     - misconfig
     - secret
-#    - license
 misconfiguration:
   scanners:
     - dockerfile
