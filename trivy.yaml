@@ -1,3 +1,4 @@
+ignorefile: .trivyignore
 severity:
   - HIGH
   - CRITICAL
@@ -10,3 +11,4 @@ misconfiguration:
   scanners:
     - dockerfile
     - terraform
+output:  'trivy-results.sarif'
