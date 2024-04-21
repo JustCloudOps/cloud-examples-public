@@ -11,7 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: default
     steps:    
       - name: Check out code
         uses: actions/checkout@v2
@@ -25,7 +24,7 @@ jobs:
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -33,7 +32,7 @@ jobs:
         if: ${{ contains(steps.changed-files.outputs.changed, 'apps/uploader-processor/uploader/') }}
         uses: docker/build-push-action@v5
         with:
-          file: ./apps/uploader-processor/uploader
+          file: ./apps/uploader-processor/uploader/Dockerfile
           push: true
           tags: uploader:latest
 
@@ -41,7 +40,7 @@ jobs:
         if: ${{ contains(steps.changed-files.outputs.changed, 'apps/uploader-processor/processor/') }}
         uses: docker/build-push-action@v5
         with:
-          file: ./apps/uploader-processor/processor
+          file: ./apps/uploader-processor/processor/Dockerfile
           push: true
           tags: processor:latest
 
