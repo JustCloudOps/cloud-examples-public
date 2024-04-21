@@ -1,4 +1,3 @@
-#dummy values
 terraform {
   backend "s3" {
     bucket = "SOME-BUCKET-tf-state"

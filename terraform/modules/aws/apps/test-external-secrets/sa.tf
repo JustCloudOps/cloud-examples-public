@@ -1,5 +1,5 @@
 module "service_account" {
-    source = "../../common-patterns/eks-sa"
+    source = "../../common-patterns/eks-k8s-sa"
     cluster_name = var.cluster_name
     sa_name = var.sa_name
     sa_ns = var.sa_ns

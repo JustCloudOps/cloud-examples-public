@@ -29,6 +29,7 @@ module "eks" {
     }
   }
 
+
   vpc_id                  = var.vpc_id
   subnet_ids              = var.nodegroup_subnets
   eks_managed_node_groups = var.managed_nodegroups_config
