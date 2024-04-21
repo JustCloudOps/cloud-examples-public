@@ -34,7 +34,7 @@ jobs:
         with:
           context: ./apps/uploader-processor/uploader
           push: true
-          tags: uploader:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/uploader:latest
 
       - name: Build Processor
         if: ${{ contains(steps.changed-files.outputs.changed, 'apps/uploader-processor/processor/') }}
@@ -42,6 +42,6 @@ jobs:
         with:
           context: ./apps/uploader-processor/processor
           push: true
-          tags: processor:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/processor:latest
 
 
