@@ -32,7 +32,7 @@ jobs:
         if: ${{ contains(steps.changed-files.outputs.changed, 'apps/uploader-processor/uploader/') }}
         uses: docker/build-push-action@v5
         with:
-          file: ./apps/uploader-processor/uploader/Dockerfile
+          context: ./apps/uploader-processor/uploader
           push: true
           tags: uploader:latest
 
@@ -40,7 +40,7 @@ jobs:
         if: ${{ contains(steps.changed-files.outputs.changed, 'apps/uploader-processor/processor/') }}
         uses: docker/build-push-action@v5
         with:
-          file: ./apps/uploader-processor/processor/Dockerfile
+          context: ./apps/uploader-processor/processor
           push: true
           tags: processor:latest
 
