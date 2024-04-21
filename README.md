@@ -1,6 +1,6 @@
 # cloud-examples-public
 
-![Apps Build Status](https://github.com/JustCloudOps/cloud-examples-public/actions/workflows/build.yml/badge.svg)
+![Apps Build Status](https://github.com/JustCloudOps/cloud-examples-public/actions/workflows/build.yaml/badge.svg)
 
 
 
