@@ -1,0 +1,38 @@
+name: build-apps
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/uploader-processor/processor/**
+      - apps/uploader-processor/uploader/**
+      - '!**/*.md'
+
+      
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Check out code
+        uses: actions/checkout@v2
+    
+      - name: Determine changed between the previous HEAD to the current HEAD
+        id: changed-files
+        run: |
+          echo "::set-output name=changed::$(git diff --name-only HEAD^ HEAD)"
+
+      - name: Build Processor
+        if: ${{ contains(steps.changed-files.outputs.changed, 'apps/uploader-processor/processor') }}
+        run: |
+          echo "build processor"
+
+      - name: Build Uploader
+        if: ${{ contains(steps.changed-files.outputs.changed, 'apps/uploader-processor/uploader/') }}
+        run: |
+          echo "build uploader"
