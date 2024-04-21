@@ -27,7 +27,7 @@ jobs:
       - name: Determine changed between the previous HEAD to the current HEAD
         id: changed-files
         run: |
-          echo "::set-output name=changed::$(git diff --name-only HEAD^ -- HEAD)"
+          echo "::set-output name=changed::$(git diff --name-only HEAD^ HEAD)"
 
       - name: Build Processor
         if: ${{ contains(steps.changed-files.outputs.changed, 'apps/uploader-processor/processor') }}
