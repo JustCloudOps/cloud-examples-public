@@ -21,8 +21,8 @@ jobs:
     steps:    
       - name: Check out code
         uses: actions/checkout@v2
-          with:
-            fetch-depth: 2
+        with:
+          fetch-depth: 2
     
       - name: Determine changed between the previous HEAD to the current HEAD
         id: changed-files
