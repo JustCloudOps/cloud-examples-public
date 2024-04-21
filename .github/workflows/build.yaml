@@ -22,6 +22,11 @@ jobs:
         run: |
           echo "::set-output name=changed::$(git diff --name-only HEAD^ HEAD)"
 
+      - name: Get short hash of HEAD
+        id: short-hash
+        run: |
+          echo "::set-output name=HEAD::$(git rev-parse --short HEAD)"
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -34,7 +39,7 @@ jobs:
         with:
           context: ./apps/uploader-processor/uploader
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/uploader:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/uploader:latest,${{ secrets.DOCKERHUB_USERNAME }}/uploader:${{ steps.short-hash.outputs.HEAD }}
 
       - name: Build Processor
         if: ${{ contains(steps.changed-files.outputs.changed, 'apps/uploader-processor/processor/') }}
@@ -42,6 +47,6 @@ jobs:
         with:
           context: ./apps/uploader-processor/processor
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/processor:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/processor:latest,${{ secrets.DOCKERHUB_USERNAME }}/processor:${{ steps.short-hash.outputs.HEAD }}
 
 
