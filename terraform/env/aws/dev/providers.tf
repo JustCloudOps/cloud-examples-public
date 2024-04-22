@@ -13,18 +13,18 @@ provider "aws" {
   default_tags {
     tags = {
       terraform = "true"
-      repo      = "github.com/j-worr/cloud-examples-public"
+      repo      = "cloud-examples-public"
     }
   }
 }
 
 provider "helm" {
   kubernetes {
-    host                   = module.eks-cluster-1.cluster.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.eks-cluster-1.cluster.cluster_certificate_authority_data)
+    host                   = module.eks-cluster-1.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks-cluster-1.cluster_certificate_authority_data)
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", module.eks-cluster-1.cluster.cluster_name]
+      args        = ["eks", "get-token", "--cluster-name", module.eks-cluster-1.cluster_name]
       command     = "aws"
     }
   }
@@ -32,12 +32,12 @@ provider "helm" {
 }
 
 provider "kubernetes" {
-    host                   = module.eks-cluster-1.cluster.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.eks-cluster-1.cluster.cluster_certificate_authority_data)
-    exec {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", module.eks-cluster-1.cluster.cluster_name]
-      command     = "aws"
-    }
+  host                   = module.eks-cluster-1.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks-cluster-1.cluster_certificate_authority_data)
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    args        = ["eks", "get-token", "--cluster-name", module.eks-cluster-1.cluster_name]
+    command     = "aws"
+  }
   alias = "eks-cluster-1"
 }

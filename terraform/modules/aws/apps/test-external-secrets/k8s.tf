@@ -1,5 +1,5 @@
 #Why am I doing this? This method keeps the sa annotation out of a manifest.  This is just unique handling for a public-facing project.
-
+/*
 resource "kubernetes_namespace" "namespace" {
   metadata {
     name = var.sa_ns
@@ -18,3 +18,4 @@ resource "kubernetes_service_account" "serviceaccount" {
   }
   depends_on = [ module.service_account, kubernetes_namespace.namespace ]
 }
+*/

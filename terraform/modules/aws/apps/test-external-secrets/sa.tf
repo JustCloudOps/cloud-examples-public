@@ -4,7 +4,7 @@ module "service_account" {
     sa_name = var.sa_name
     sa_ns = var.sa_ns
     sa_policy = data.aws_iam_policy_document.sa_policy.json
-    
+    deploy_k8s_ns_sa = true
 }
 
 data "aws_iam_policy_document" "sa_policy" {
@@ -13,8 +13,8 @@ data "aws_iam_policy_document" "sa_policy" {
       effect = "Allow"
       actions = ["secretsmanager:GetSecretValue"]
       resources = [
-        aws_secretsmanager_secret.secret.arn,
-        aws_secretsmanager_secret.secret2.arn
+#        aws_secretsmanager_secret.secret.arn,
+#        aws_secretsmanager_secret.secret2.arn
         ]
     }
 }
