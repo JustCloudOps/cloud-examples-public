@@ -1,30 +1,31 @@
 from flask import Flask, render_template, request
+import logging
 import boto3
 import os
 
 app = Flask(__name__)
 
-@app.route("/")
-def home():
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+AWS_REGION = os.environ['AWS_REGION']
+S3_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
+
+@app.route('/')
+def index():
     return render_template('index.html')
 
-@app.route("/upload", methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['file']
     if file:
-        # Generate presigned URL
-        s3_client = boto3.client('s3', region_name=os.getenv('AWS_REGION'))
-        presigned_url = s3_client.generate_presigned_url(
-            'put_object',
-            Params={
-                'Bucket': os.getenv('S3_BUCKET_NAME'),
-                'Key': file.filename,
-                'ContentType': file.content_type
-            },
-            ExpiresIn=600  # URL expires in 5 min todaywe
-        )
-        return render_template('upload.html', presigned_url=presigned_url)
+        # Generate presigned POST data
+        logger.info('generating presigned post')
+        s3_client = boto3.client('s3', region_name=AWS_REGION)
+        s3_client.upload_fileobj(file, S3_BUCKET_NAME, file.filename)
+
+        return render_template('upload.html')
     return 'No file uploaded'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

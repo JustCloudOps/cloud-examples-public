@@ -44,3 +44,7 @@ backend.tf
 
 #plan notes
 to_do.md
+
+#docker env
+.env
+**.env
