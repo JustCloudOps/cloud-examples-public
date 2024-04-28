@@ -3,6 +3,7 @@ locals {
   deploy_options = {
     eks = [
       #"karpenter_prereqs",
+      "alb_controller",
     ]
   }
 }

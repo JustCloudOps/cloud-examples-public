@@ -7,15 +7,3 @@ A few high level notes:
 - This project deploys a vpc and eks cluster. The EKS cluster is in a private subnets.
 - The EKS cluster does have a public endpoint, but is restricted to the IP of where it is deployed from.
 
-## App notes
-
-### Argo CD,
-
-Port forward for access:
-`kubectl port-forward deployment/argo-cd-argocd-server -n argo-cd  8888:8080`
-
-In browser `http://localhost:8888/`
-
-Get initial password with:
-`kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
-

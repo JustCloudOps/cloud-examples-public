@@ -23,6 +23,7 @@ module "vpc-1" {
 # EKS Cluster
 #####
 
+
 module "eks-cluster-1" {
   source                                   = "terraform-aws-modules/eks/aws"
   version                                  = "20.2.1"
@@ -62,6 +63,7 @@ module "eks-cluster-1" {
   }
 }
 
+
 module "karpenter_prereqs" {
   create               = contains(local.deploy_options.eks, "karpenter_prereqs")
   source               = "terraform-aws-modules/eks/aws//modules/karpenter"
@@ -74,72 +76,32 @@ module "karpenter_prereqs" {
 }
 
 
-
-#####
-# Platform base apps
-#####
-
-module "external_secrets" {
-  source = "../../../modules/k8s/external-secrets"
-  providers = {
-    helm = helm.eks-cluster-1
-  }
-  #depends_on = [module.eks-cluster-1, module.alb_controller]
-  depends_on = [module.eks-cluster-1]
-}
-
-/*
-module "metrics-server" {
-  source = "../../../modules/k8s/metrics-server"
-  providers = {
-    helm = helm.eks-cluster-1
-  }
-  depends_on = [module.eks-cluster-1]
-}
-
-
-
-
-
-
 module "alb_controller" {
+  count  = contains(local.deploy_options.eks, "alb_controller") == true ? 1 : 0
   source = "../../../modules/k8s/alb-controller"
   providers = {
     helm = helm.eks-cluster-1
   }
   account_id    = data.aws_caller_identity.current.account_id
-  cluster_name  = module.eks-cluster-1.cluster.cluster_name
-  oidc_provider = module.eks-cluster-1.cluster.cluster_oidc_issuer_url
+  cluster_name  = module.eks-cluster-1.cluster_name
+  oidc_provider = module.eks-cluster-1.cluster_oidc_issuer_url
   depends_on    = [module.eks-cluster-1]
 }
-
-
- Uncomment to deploy ArgoCD with terrafrom 
-module "argo_cd" {
-  source = "../../../modules/k8s/argo-cd"
-  providers = {
-    helm = helm.eks-cluster-1
-  }
-  depends_on = [module.eks-cluster-1, module.external_secrets, module.alb_controller]
-}
-*/
 
 
 #####
 # apps
 #####
 
-module "test-external-secrets" {
-  source       = "../../../modules/aws/apps/test-external-secrets"
+
+module "uploader-processor" {
+  source       = "../../../modules/aws/apps/uploader-processor"
+  env          = local.env
   cluster_name = module.eks-cluster-1.cluster_name
+  account_id   = data.aws_caller_identity.current.account_id
   providers = {
     kubernetes = kubernetes.eks-cluster-1
   }
-  depends_on = [module.eks-cluster-1, module.external_secrets]
-}
 
-
-module "uploader-processor" {
-  source = "../../../modules/aws/apps/uploader-processor"
-  env    = local.env
+  depends_on = [module.eks-cluster-1]
 }
