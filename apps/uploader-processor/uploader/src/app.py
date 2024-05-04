@@ -4,18 +4,23 @@ import boto3
 import json
 import os
 
-app = Flask(__name__)
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 AWS_REGION = os.environ['AWS_REGION']
 S3_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
 
-@app.route('/healthcheck')
-def healthcheck():
-    #To Do: write a health check that validates s3 connectivity
-    return json.dumps({'status': 'ok'}), 200, {'ContentType':'application/json'} 
+s3_client = boto3.client('s3', region_name=AWS_REGION)
+
+app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1000 * 1000 #50MB Upload limit
+app.logger.setLevel(logging.INFO)
+
+@app.route('/health')
+def health():
+    try:
+        s3_client.head_bucket(Bucket=S3_BUCKET_NAME)
+        return json.dumps({'status': 'ok'}), 200, {'ContentType':'application/json'}
+    except Exception as e:
+        app.logger.error(e)
+        return json.dumps({'status': 'failed'}), 503, {'ContentType':'application/json'}
 
 @app.route('/')
 def index():
@@ -25,11 +30,8 @@ def index():
 def upload():
     file = request.files['file']
     if file:
-        # Generate presigned POST data
-        logger.info('generating presigned post')
-        s3_client = boto3.client('s3', region_name=AWS_REGION)
+        app.logger.info('Starting upload of %s', file.filename)
         s3_client.upload_fileobj(file, S3_BUCKET_NAME, file.filename)
-
         return render_template('upload.html')
     return 'No file uploaded'
 
