@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import logging
 import boto3
+import json
 import os
 
 app = Flask(__name__)
@@ -10,6 +11,11 @@ logger = logging.getLogger(__name__)
 
 AWS_REGION = os.environ['AWS_REGION']
 S3_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
+
+@app.route('/healthcheck')
+def healthcheck():
+    #To Do: write a health check that validates s3 connectivity
+    return json.dumps({'status': 'ok'}), 200, {'ContentType':'application/json'} 
 
 @app.route('/')
 def index():
