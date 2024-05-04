@@ -17,7 +17,11 @@ variable "sa_policy_doc" {
   type        = string
 }
 
-variable "deploy_k8s_ns_sa" {
-  description = "whether to deploy a kubernetes namespace and annotated k8s service account"
+variable "create_k8s_ns" {
+  description = "whether to create a kubernetes namespace"
+  type        = bool
+}
+variable "create_k8s_sa" {
+  description = "whether to create annotated kubernetes service account"
   type        = bool
 }

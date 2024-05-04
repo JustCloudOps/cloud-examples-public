@@ -1,10 +1,10 @@
 resource "aws_sqs_queue" "uploader_queue" {
-  name   = "${var.env}-uploader-processor-${random_integer.unique_identifier.result}"
+  name = "${var.env}-uploader-processor-${random_integer.unique_identifier.result}"
 }
 
 resource "aws_sqs_queue_policy" "uploader_queue_policy" {
   queue_url = aws_sqs_queue.uploader_queue.id
-  policy = data.aws_iam_policy_document.uploader_queue_policy_doc.json
+  policy    = data.aws_iam_policy_document.uploader_queue_policy_doc.json
 }
 
 data "aws_iam_policy_document" "uploader_queue_policy_doc" {

@@ -24,7 +24,7 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
     queue_arn = aws_sqs_queue.uploader_queue.arn
     events    = ["s3:ObjectCreated:*"]
   }
-  depends_on = [ aws_sqs_queue.uploader_queue ]
+  depends_on = [aws_sqs_queue.uploader_queue]
 }
 
 resource "aws_ssm_parameter" "uploader_bucket" {

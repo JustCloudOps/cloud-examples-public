@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: uploader
+  name: uploader
+  namespace: uploader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uploader
+  template:
+    metadata:
+      labels:
+        app: uploader
+    spec:
+      serviceAccount: uploader
+      containers:
+      - image: justcloudops/uploader:latest
+        name: uploader
+        envFrom:
+        - secretRef:
+            name: uploader-config
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "1G"
+            cpu: "1"
+        ports:
+         - name: http
+           containerPort: 5000
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          failureThreshold: 3
